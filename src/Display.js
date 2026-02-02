@@ -113,11 +113,13 @@ const toggleDropdown = (display) => {
 		extension.classList.add('hidden');
 }
 
-export const updateDisplay = async (display) => {
-	const underlying = document.getElementById(`underlying-${display.num}`);
+export const updateDisplays = async (displays) => {
+	for(const display of displays) {
+		const underlying = document.getElementById(`underlying-${display.num}`);
 
-	underlying.innerText = tickers[display.ticker].underlying;
-	await drawGraph(display);
+		underlying.innerText = tickers[display.ticker].underlying;
+		await drawGraph(display);
+	}
 }
 
 export const addListeners = (displays) => {
@@ -132,7 +134,7 @@ export const addListeners = (displays) => {
 				activeItem.innerText = item.innerText;
 				item.innerText = temp;
 				toggleDropdown(display);
-				await updateDisplay(display);
+				await updateDisplays(displays);
 			});
 		});
 	}
@@ -144,7 +146,7 @@ class Display {
 		this.num = num;
 		this.dropdown = false;
 
-		document.body.innerHTML += `
+		document.getElementById('displays-container').innerHTML += `
 		<div class="container">
 			<div class="dropdown-container">
 				<div id="dropdown-top">

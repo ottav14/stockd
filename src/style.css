@@ -47,12 +47,19 @@ body {
 	width: 100%;
 }
 
+button {
+	border-radius: 0;
+}
+
+#add-button {
+	border: 1px solid #000;
+}
+
 .dropdown-button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	aspect-ratio: 1 / 1;
-	border-radius: 0;
 	border: none;
 	border-left: 1px solid #000;
 }

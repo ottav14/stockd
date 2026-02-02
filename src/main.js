@@ -1,5 +1,5 @@
 import Display from './Display.js';
-import { addListeners, updateDisplay } from './Display.js';
+import { addListeners, updateDisplays } from './Display.js';
 
 const count = 1;
 const displays = [];
@@ -10,13 +10,12 @@ const addDisplay = async () => {
 	displays.push(display);
 	
 	addListeners(displays);
+	await updateDisplays(displays);
 }
 
 for(let i=0; i<count; i++)
 	await addDisplay();
 
-for(const display of displays) {
-	await updateDisplay(display);
-}
+document.getElementById('add-button').addEventListener('click', addDisplay);
 
 
