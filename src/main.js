@@ -1,14 +1,22 @@
-import { addDisplay, addListeners, updateDisplay } from './Display.js';
+import Display from './Display.js';
+import { addListeners, updateDisplay } from './Display.js';
 
-const count = 3;
+const count = 1;
 const displays = [];
 
+const addDisplay = async () => {
+	const id = displays.length+1;
+	const display = new Display('SPY', id);
+	displays.push(display);
+	
+	addListeners(displays);
+}
+
 for(let i=0; i<count; i++)
-	displays.push(await addDisplay());
+	await addDisplay();
 
 for(const display of displays) {
 	await updateDisplay(display);
-	addListeners(display);
 }
 
 

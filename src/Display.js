@@ -6,7 +6,6 @@ const canvasHeight = 500;
 const padding = 50;
 const yLabelCount = 10;
 
-
 const tickers = { 
 	'SPY': { underlying: 'S&P' },
 	'GLD': { underlying: 'Gold' },
@@ -15,14 +14,6 @@ const tickers = {
 };
 
 const displays = [];
-
-export const addDisplay = async () => {
-	const id = displays.length+1;
-	const display = new Display('SPY', id);
-	displays.push(display);
-
-	return display;
-}
 
 const line = (x1, y1, x2, y2, ctx) => {
 	ctx.beginPath();
@@ -129,20 +120,22 @@ export const updateDisplay = async (display) => {
 	await drawGraph(display);
 }
 
-export const addListeners = (display) => {
-	document.getElementById(`dropdown-button-${display.num}`).addEventListener('click', () => toggleDropdown(display));
+export const addListeners = (displays) => {
+	for(const display of displays) {
+		document.getElementById(`dropdown-button-${display.num}`).addEventListener('click', () => toggleDropdown(display));
 
-	document.querySelectorAll(`.dropdown-item-${display.num}`).forEach(item => {
-		const activeItem = document.getElementById(`active-item-${display.num}`);
-		item.addEventListener('click', async () => {
-			display.ticker = item.innerText;
-			const temp = activeItem.innerText;
-			activeItem.innerText = item.innerText;
-			item.innerText = temp;
-			toggleDropdown(display);
-			await updateDisplay(display);
+		document.querySelectorAll(`.dropdown-item-${display.num}`).forEach(item => {
+			const activeItem = document.getElementById(`active-item-${display.num}`);
+			item.addEventListener('click', async () => {
+				display.ticker = item.innerText;
+				const temp = activeItem.innerText;
+				activeItem.innerText = item.innerText;
+				item.innerText = temp;
+				toggleDropdown(display);
+				await updateDisplay(display);
+			});
 		});
-	});
+	}
 }
 
 class Display {
