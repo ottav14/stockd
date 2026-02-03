@@ -1,21 +1,9 @@
-import Display from './Display.js';
-import { addListeners, updateDisplays } from './Display.js';
+import { mount } from 'svelte'
+import './app.css'
+import App from './App.svelte'
 
-const count = 1;
-const displays = [];
+const app = mount(App, {
+	target: document.getElementById('app'),
+})
 
-const addDisplay = async () => {
-	const id = displays.length+1;
-	const display = new Display('SPY', id);
-	displays.push(display);
-	
-	addListeners(displays);
-	await updateDisplays(displays);
-}
-
-for(let i=0; i<count; i++)
-	await addDisplay();
-
-document.getElementById('add-button').addEventListener('click', addDisplay);
-
-
+export default app
